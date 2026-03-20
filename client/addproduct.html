@@ -1,0 +1,187 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Add Product - SilverStar Parts</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+  </head>
+
+  <body class="add-product-page">
+    <div id="wrapper">
+
+      <div id="main">
+        <div class="inner">
+
+          <section>
+            <header class="main">
+              <h1>Add New Product</h1>
+            </header>
+<div class="add-product-card">
+  <form id="productForm" class="add-product-form">
+    <div class="row gtr-uniform">
+      <div class="col-6 col-12-small">
+        <label for="name">Product Name</label>
+        <input type="text" id="name" name="name" placeholder="Product Name" required />
+      </div>
+
+      <div class="col-6 col-12-small">
+        <label for="price">Price (€)</label>
+        <input type="number" id="price" name="price" placeholder="Price" required />
+      </div>
+
+      <div class="col-6 col-12-small">
+        <label for="stock">Stock</label>
+        <input type="text" id="stock" name="stock" placeholder="e.g. 12 in stock" required />
+      </div>
+
+      <div class="col-6 col-12-small">
+        <label for="group">Product Type</label>
+        <select id="group" name="group" required>
+          <option value="new">New Parts</option>
+          <option value="preowned">Pre-Owned Parts</option>
+        </select>
+      </div>
+
+      <div class="col-12">
+        <label for="use">Usage / Description</label>
+        <textarea id="use" name="use" placeholder="Describe the product..." rows="6"></textarea>
+      </div>
+
+      <div class="col-12">
+        <label for="image">Image Path</label>
+        <input type="text" id="image" name="image" placeholder="e.g. images/brake1.png" />
+      </div>
+
+      <div class="col-12">
+        <ul class="actions">
+          <li><button type="submit" class="primary">Add Product</button></li>
+          <li><a href="generic.html" class="button">Back to Products</a></li>
+        </ul>
+      </div>
+    </div>
+  </form>
+
+  <hr class="major" />
+
+  <div class="delete-product-box">
+    <h2>Delete Product</h2>
+    <form id="deleteProductForm" class="add-product-form">
+      <div class="row gtr-uniform">
+        <div class="col-12">
+          <label for="deleteName">Product Name</label>
+          <input type="text" id="deleteName" name="deleteName" placeholder="Enter exact product name" required />
+        </div>
+
+        <div class="col-12">
+          <ul class="actions">
+            <li><button type="submit" class="button">Delete Product</button></li>
+          </ul>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <p id="productMessage" class="product-message" style="display:none;"></p>
+</div>
+
+          </section>
+        </div>
+      </div>
+
+      <div id="sidebar">
+        <div class="inner">
+
+          <section id="search" class="alt">
+            <form onsubmit="return false;">
+              <input type="text" name="query" id="query" placeholder="Search" />
+            </form>
+          </section>
+
+          <nav id="menu">
+            <header class="major">
+              <h2>Menu</h2>
+            </header>
+            <ul>
+              <li><a href="index.html">Homepage</a></li>
+              <li><a href="generic.html">Products</a></li>
+              <li><a href="addproduct.html">Add Product</a></li>
+              <li><a href="orders.html">Order History</a></li>
+            </ul>
+          </nav>
+
+          <section>
+            <header class="major">
+              <h2>Admin Panel</h2>
+            </header>
+            <p>Add new parts to your catalog using the form on this page.</p>
+          </section>
+
+          <footer id="footer">
+            <p class="copyright">&copy; SilverStar Parts. All rights reserved.</p>
+          </footer>
+
+        </div>
+      </div>
+
+    </div>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("productForm");
+  const deleteForm = document.getElementById("deleteProductForm");
+  const message = document.getElementById("productMessage");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const product = {
+      name: document.getElementById("name").value.trim(),
+      price: document.getElementById("price").value.trim(),
+      stock: document.getElementById("stock").value.trim(),
+      use: document.getElementById("use").value.trim(),
+      group: document.getElementById("group").value,
+      image: document.getElementById("image").value.trim() || "images/pic01.jpg"
+    };
+
+    const products = JSON.parse(localStorage.getItem("products")) || [];
+    products.push(product);
+    localStorage.setItem("products", JSON.stringify(products));
+
+    message.textContent = "Product added successfully.";
+    message.style.display = "block";
+
+    form.reset();
+  });
+
+  deleteForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const deleteName = document.getElementById("deleteName").value.trim().toLowerCase();
+    let products = JSON.parse(localStorage.getItem("products")) || [];
+
+    const originalLength = products.length;
+
+    products = products.filter(product => product.name.trim().toLowerCase() !== deleteName);
+
+    localStorage.setItem("products", JSON.stringify(products));
+
+    if (products.length < originalLength) {
+      message.textContent = "Product deleted successfully.";
+    } else {
+      message.textContent = "Product not found in added products.";
+    }
+
+    message.style.display = "block";
+    deleteForm.reset();
+  });
+});
+</script>
+  </body>
+</html>
