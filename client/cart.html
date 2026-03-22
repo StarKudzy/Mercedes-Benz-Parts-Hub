@@ -1,0 +1,787 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Cart - SilverStar Parts</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+
+  <style>
+    :root {
+      --cart-bg: #eaeded;
+      --card-bg: #ffffff;
+      --text-main: #0f1111;
+      --text-soft: #565959;
+      --border: #d5d9d9;
+      --brand: #ffd814;
+      --brand-hover: #f7ca00;
+      --link: #007185;
+      --danger: #b12704;
+      --success: #067d62;
+    }
+
+    body {
+      background: var(--cart-bg);
+      color: var(--text-main);
+    }
+
+    .cart-page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .cart-page-header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    .cart-page-header a {
+      color: var(--link);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .cart-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .cart-card,
+    .summary-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(15, 17, 17, 0.05);
+    }
+
+    .cart-card {
+      padding: 1.5rem;
+    }
+
+    .cart-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1rem;
+    }
+
+    .cart-top-row h2 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .cart-price-label {
+      color: var(--text-soft);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .cart-empty {
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    .cart-empty p {
+      color: var(--text-soft);
+      margin-bottom: 1rem;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 140px minmax(0, 1fr) 120px;
+      gap: 1rem;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+      transition: 0.15s ease;
+    }
+
+    .cart-item:hover {
+      background: #fafafa;
+    }
+
+    .cart-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0.25rem;
+    }
+
+    .cart-item-image {
+      width: 100%;
+      max-width: 140px;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+      border-radius: 10px;
+      background: #fff;
+      border: 1px solid #eef1f1;
+      padding: 0.5rem;
+    }
+
+    .cart-item-title {
+      margin: 0 0 0.4rem 0;
+      font-size: 1.1rem;
+      line-height: 1.35;
+    }
+
+    .cart-stock {
+      color: var(--success);
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+      font-size: 0.95rem;
+    }
+
+    .cart-meta {
+      color: var(--text-soft);
+      font-size: 0.92rem;
+      margin-bottom: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .cart-actions {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .qty-control {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+      background: #f7fafa;
+    }
+
+    .qty-control button {
+      border: none;
+      background: transparent;
+      width: 38px;
+      height: 38px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      color: var(--text-main);
+      box-shadow: none;
+    }
+
+    .qty-control button:hover {
+      background: #eef3f3;
+    }
+
+    .qty-control span {
+      min-width: 38px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .action-link {
+      border: none;
+      background: none;
+      color: var(--link);
+      cursor: pointer;
+      padding: 0;
+      font-size: 0.95rem;
+      box-shadow: none;
+    }
+
+    .action-link:hover {
+      text-decoration: underline;
+    }
+
+    .cart-item-price {
+      text-align: right;
+      font-size: 1.2rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .cart-item-unit {
+      display: block;
+      color: var(--text-soft);
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-top: 0.35rem;
+    }
+
+    .cart-subtotal-row {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      text-align: right;
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .summary-card {
+      padding: 1.2rem;
+      position: sticky;
+      top: 1.5rem;
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-main);
+    }
+
+    .summary-line.small {
+      color: var(--text-soft);
+      font-size: 0.95rem;
+    }
+
+    .summary-total {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      font-size: 1.25rem;
+      font-weight: 700;
+      padding-top: 0.9rem;
+      margin-top: 0.9rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .secure-note {
+      color: var(--success);
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      border: none;
+      background: var(--brand);
+      color: #111;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 0.95rem 1rem;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .checkout-btn:hover {
+      background: var(--brand-hover);
+    }
+
+    .continue-link {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 600;
+      background: #fff;
+    }
+
+    .checkout-form {
+      margin-top: 1.2rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .checkout-form label {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    .checkout-form .field {
+      margin-bottom: 0.9rem;
+    }
+
+    .checkout-form input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.8rem 0.9rem;
+      background: #fff;
+    }
+
+    #checkoutMessage {
+      margin-top: 1rem;
+      font-weight: 700;
+      display: none;
+    }
+
+    .trust-box {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-soft);
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    .free-ship-bar {
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+
+    .free-ship-progress {
+      height: 6px;
+      background: #eee;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+
+    .free-ship-fill {
+      height: 100%;
+      background: #067d62;
+      width: 0%;
+    }
+
+    .cart-link {
+      position: relative;
+      display: inline-block;
+    }
+
+    .cart-badge {
+      background: #e11d48;
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 2px 6px;
+      margin-left: 6px;
+    }
+
+    @media screen and (max-width: 980px) {
+      .cart-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-card {
+        position: static;
+      }
+    }
+
+    @media screen and (max-width: 640px) {
+      .cart-item {
+        grid-template-columns: 1fr;
+      }
+
+      .cart-item-price {
+        text-align: left;
+      }
+
+      .cart-item-image {
+        max-width: 110px;
+      }
+
+      .cart-top-row {
+        align-items: start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="wrapper">
+    <div id="main">
+      <div class="inner">
+        <div class="cart-page-header">
+          <h1>Shopping Cart</h1>
+          <a href="generic.html">Continue shopping</a>
+        </div>
+
+        <div class="cart-layout">
+          <div class="cart-main-column">
+            <section class="cart-card">
+              <div class="cart-top-row">
+                <h2>Items in your cart</h2>
+                <div class="cart-price-label">Price</div>
+              </div>
+
+              <div id="cartItems"></div>
+
+              <div class="cart-subtotal-row" id="cartSubtotalRow">
+                Subtotal (0 items): €0.00
+              </div>
+            </section>
+          </div>
+
+          <aside class="cart-summary-column">
+            <section class="summary-card">
+              <div class="secure-note">✔ Your order is eligible for secure checkout</div>
+              <div id="freeShippingBar" class="free-ship-bar"></div>
+
+              <div class="summary-line">
+                <span>Items subtotal</span>
+                <strong id="summaryItemsSubtotal">€0.00</strong>
+              </div>
+
+              <div class="summary-line small">
+                <span>Estimated shipping</span>
+                <span id="summaryShipping">€0.00</span>
+              </div>
+
+              <div class="summary-line small">
+                <span>Tax</span>
+                <span>Included at checkout</span>
+              </div>
+
+              <div class="summary-total">
+                <span>Order total</span>
+                <span id="summaryGrandTotal">€0.00</span>
+              </div>
+
+              <div id="paypal-button-container" style="margin: 1rem 0;"></div>
+
+              <form id="checkoutForm" class="checkout-form">
+                <div class="field">
+                  <label for="customerName">Full Name</label>
+                  <input type="text" id="customerName" required />
+                </div>
+
+                <div class="field">
+                  <label for="customerEmail">Email</label>
+                  <input type="email" id="customerEmail" required />
+                </div>
+
+                <button type="submit" class="checkout-btn">Continue with PayPal</button>
+              </form>
+
+              <a href="generic.html" class="continue-link">Add more parts</a>
+              <p id="checkoutMessage"></p>
+
+              <div class="trust-box">
+                Genuine and inspected Mercedes-Benz parts. Fast processing, reliable support, and secure order handling.
+              </div>
+            </section>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+    <div id="sidebar">
+      <div class="inner">
+        <nav id="menu">
+          <header class="major">
+            <h2>Menu</h2>
+          </header>
+          <ul>
+            <li><a href="index.html">Homepage</a></li>
+            <li><a href="generic.html">Products</a></li>
+            <li><a href="orderhistory.html">Order History</a></li>
+            <li>
+              <a href="cart.html" class="cart-link">
+                Cart
+                <span id="cartCountBadge" class="cart-badge">0</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const cartItemsContainer = document.getElementById("cartItems");
+    const cartSubtotalRow = document.getElementById("cartSubtotalRow");
+    const summaryItemsSubtotal = document.getElementById("summaryItemsSubtotal");
+    const summaryShipping = document.getElementById("summaryShipping");
+    const summaryGrandTotal = document.getElementById("summaryGrandTotal");
+    const checkoutForm = document.getElementById("checkoutForm");
+    const checkoutMessage = document.getElementById("checkoutMessage");
+
+    function getCart() {
+      return JSON.parse(localStorage.getItem("cart")) || [];
+    }
+
+    function saveCart(cart) {
+      localStorage.setItem("cart", JSON.stringify(cart));
+      if (window.updateCartBadge) window.updateCartBadge();
+    }
+
+    function formatPrice(value) {
+      return `€${Number(value).toFixed(2)}`;
+    }
+
+    function getShipping(subtotal) {
+      return subtotal >= 150 ? 0 : (subtotal > 0 ? 9.99 : 0);
+    }
+
+    function changeQuantity(index, change) {
+      const cart = getCart();
+      if (!cart[index]) return;
+
+      cart[index].quantity += change;
+
+      if (cart[index].quantity <= 0) {
+        cart.splice(index, 1);
+      }
+
+      saveCart(cart);
+      renderCart();
+    }
+
+    function removeItem(index) {
+      const cart = getCart();
+      cart.splice(index, 1);
+      saveCart(cart);
+      renderCart();
+    }
+
+    function renderCart() {
+      const cart = getCart();
+      cartItemsContainer.innerHTML = "";
+
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = `
+          <div class="cart-empty">
+            <h3>Your cart is empty</h3>
+            <p>Browse our Mercedes-Benz parts and add items to your cart.</p>
+            <a href="generic.html" class="button primary">Shop now</a>
+          </div>
+        `;
+
+        document.getElementById("freeShippingBar").innerHTML = "";
+        cartSubtotalRow.textContent = "Subtotal (0 items): €0.00";
+        summaryItemsSubtotal.textContent = "€0.00";
+        summaryShipping.textContent = "€0.00";
+        summaryGrandTotal.textContent = "€0.00";
+        return;
+      }
+
+      let subtotal = 0;
+      let totalItems = 0;
+
+      cart.forEach((item, index) => {
+        const quantity = Number(item.quantity) || 1;
+        const price = Number(item.price) || 0;
+        const itemTotal = price * quantity;
+
+        subtotal += itemTotal;
+        totalItems += quantity;
+
+        const article = document.createElement("article");
+        article.className = "cart-item";
+        article.innerHTML = `
+          <div>
+            <img
+              src="${item.image || 'images/pic01.jpg'}"
+              alt="${item.name || 'Product'}"
+              class="cart-item-image"
+            />
+          </div>
+
+          <div>
+            <h3 class="cart-item-title">${item.name || "Unnamed product"}</h3>
+            <div class="cart-stock">In Stock</div>
+            <div class="cart-meta">
+              Suitable for selected Mercedes-Benz models.<br />
+              Fast dispatch available from SilverStar Parts.
+            </div>
+
+            <div class="cart-actions">
+              <div class="qty-control">
+                <button type="button" onclick="changeQuantity(${index}, -1)">−</button>
+                <span>${quantity}</span>
+                <button type="button" onclick="changeQuantity(${index}, 1)">+</button>
+              </div>
+
+              <button type="button" class="action-link" onclick="removeItem(${index})">
+                Remove
+              </button>
+            </div>
+          </div>
+
+          <div class="cart-item-price">
+            ${formatPrice(itemTotal)}
+            <span class="cart-item-unit">${formatPrice(price)} each</span>
+          </div>
+        `;
+
+        cartItemsContainer.appendChild(article);
+      });
+
+      const shipping = getShipping(subtotal);
+      const grandTotal = subtotal + shipping;
+      const freeShipEl = document.getElementById("freeShippingBar");
+      const remaining = 150 - subtotal;
+
+      if (remaining > 0) {
+        const percent = Math.min(100, (subtotal / 150) * 100);
+        freeShipEl.innerHTML = `
+          Add ${formatPrice(remaining)} more for FREE shipping
+          <div class="free-ship-progress">
+            <div class="free-ship-fill" style="width:${percent}%"></div>
+          </div>
+        `;
+      } else {
+        freeShipEl.innerHTML = `<span style="color:#067d62;font-weight:600">✔ You qualify for FREE shipping</span>`;
+      }
+
+      cartSubtotalRow.textContent = `Subtotal (${totalItems} item${totalItems !== 1 ? "s" : ""}): ${formatPrice(subtotal)}`;
+      summaryItemsSubtotal.textContent = formatPrice(subtotal);
+      summaryShipping.innerHTML = shipping === 0
+        ? `<span style="color:#067d62;font-weight:600">FREE</span>`
+        : formatPrice(shipping);
+      summaryGrandTotal.textContent = formatPrice(grandTotal);
+    }
+checkoutForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const cart = getCart();
+  const customerName = document.getElementById("customerName").value.trim();
+  const customerEmail = document.getElementById("customerEmail").value.trim();
+
+  if (cart.length === 0) {
+    checkoutMessage.textContent = "Your cart is empty.";
+    checkoutMessage.style.display = "block";
+    checkoutMessage.style.color = "#b12704";
+    return;
+  }
+
+  if (!customerName || !customerEmail) {
+    checkoutMessage.textContent = "Please enter your full name and email first.";
+    checkoutMessage.style.display = "block";
+    checkoutMessage.style.color = "#b12704";
+    return;
+  }
+
+  checkoutMessage.textContent = "Now use the PayPal button to complete payment.";
+  checkoutMessage.style.display = "block";
+  checkoutMessage.style.color = "#007185";
+});
+
+    renderCart();
+  </script>
+
+  <script>
+    (function () {
+      function updateCartBadge() {
+        const badge = document.getElementById("cartCountBadge");
+        if (!badge) return;
+
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let count = 0;
+
+        cart.forEach(item => {
+          count += Number(item.quantity || 1);
+        });
+
+        badge.textContent = count;
+      }
+
+      updateCartBadge();
+      window.updateCartBadge = updateCartBadge;
+    })();
+  </script>
+
+  <script src="https://www.paypal.com/sdk/js?client-id=AUwa6aJcWCtR_AQacGMzWRWF9rSOzfuStywXgW_XDGsdB5MffdICuyigfzYMcOFPDX708GAmD4551ws6&currency=EUR&enable-funding=card"></script>
+
+  <script>
+  function showCheckoutMessage(message, color = "#b12704") {
+    const checkoutMessage = document.getElementById("checkoutMessage");
+    checkoutMessage.textContent = message;
+    checkoutMessage.style.display = "block";
+    checkoutMessage.style.color = color;
+  }
+
+  console.log("window.paypal =", window.paypal);
+
+  if (!window.paypal) {
+    console.error("PayPal SDK did not load.");
+    showCheckoutMessage("PayPal SDK did not load.");
+  } else {
+    paypal.Buttons({
+      createOrder: async function () {
+        const customerName = document.getElementById("customerName").value.trim();
+        const customerEmail = document.getElementById("customerEmail").value.trim();
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        if (cart.length === 0) {
+          showCheckoutMessage("Your cart is empty.");
+          throw new Error("Cart is empty");
+        }
+
+        if (!customerName || !customerEmail) {
+          showCheckoutMessage("Please enter your full name and email before paying.");
+          throw new Error("Missing customer info");
+        }
+
+        const res = await fetch("/api/paypal/create-order", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ cart })
+        });
+
+        const data = await res.json();
+        console.log("create-order response:", data);
+
+        if (!res.ok || !data.id) {
+          showCheckoutMessage(data.message || "Failed to create PayPal order.");
+          throw new Error(data.message || "Failed to create order");
+        }
+
+        return data.id;
+      },
+
+      onApprove: async function (data) {
+        const customerName = document.getElementById("customerName").value.trim();
+        const customerEmail = document.getElementById("customerEmail").value.trim();
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        const res = await fetch("/api/paypal/capture-order", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            orderID: data.orderID,
+            customerName,
+            customerEmail,
+            items: cart.map(item => ({
+              product: item.product,
+              quantity: item.quantity
+            }))
+          })
+        });
+
+        const result = await res.json();
+        console.log("capture-order response:", result);
+
+        if (!res.ok) {
+          showCheckoutMessage(result.message || "Payment captured but order save failed.");
+          return;
+        }
+
+        localStorage.removeItem("cart");
+        if (window.updateCartBadge) window.updateCartBadge();
+        window.location.href = "orderhistory.html";
+      },
+
+      onError: function (err) {
+        console.error("PAYPAL BUTTON ERROR:", err);
+        showCheckoutMessage("PayPal failed. Check browser console.");
+      }
+    }).render("#paypal-button-container")
+      .then(() => console.log("PayPal button rendered"))
+      .catch(err => {
+        console.error("Render failed:", err);
+        showCheckoutMessage("PayPal button failed to render.");
+      });
+  }
+</script>
+</body>
+</html>

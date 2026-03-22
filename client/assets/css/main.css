@@ -3208,3 +3208,163 @@ mark {
 .delete-product-box h2 {
   margin-bottom: 1rem;
 }
+.product-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+}
+
+.product-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.product-modal.active,
+.product-modal.active + .product-modal-overlay,
+.product-modal-overlay.active {
+  display: block;
+}
+
+.product-modal.active {
+  display: flex;
+}
+
+.product-modal-content {
+  background: #fff;
+  max-width: 800px;
+  width: 100%;
+  border-radius: 12px;
+  padding: 2rem;
+  position: relative;
+}
+
+.product-modal-body {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.product-modal-image img {
+  max-width: 280px;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.product-modal-details {
+  flex: 1;
+}
+
+.close-modal {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border: none;
+  background: transparent;
+  font-size: 2rem;
+  cursor: pointer;
+}
+/* ===== FIXED PRODUCT MODAL OVERRIDES ===== */
+.product-trigger {
+  cursor: pointer;
+}
+
+.product-modal-overlay {
+  display: none !important;
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(0, 0, 0, 0.6) !important;
+  z-index: 9998 !important;
+}
+
+.product-modal-overlay.active {
+  display: block !important;
+}
+
+.product-modal {
+  display: none !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 9999 !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 2rem !important;
+}
+
+.product-modal.active {
+  display: flex !important;
+}
+
+.product-modal-content {
+  position: relative !important;
+  background: #fff !important;
+  width: min(900px, calc(100% - 2rem)) !important;
+  max-width: 800px !important;
+  border-radius: 12px !important;
+  padding: 2rem !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2) !important;
+  margin: 0 auto !important;
+}
+
+.product-modal-body {
+  display: flex !important;
+  gap: 2rem !important;
+  align-items: flex-start !important;
+  flex-wrap: wrap !important;
+}
+
+.product-modal-image img {
+  width: 100% !important;
+  max-width: 280px !important;
+  border-radius: 8px !important;
+  object-fit: contain !important;
+}
+
+.product-modal-details {
+  flex: 1 !important;
+  min-width: 260px !important;
+}
+
+.close-modal {
+  position: absolute !important;
+  top: 1rem !important;
+  right: 1rem !important;
+  border: none !important;
+  background: transparent !important;
+  font-size: 2rem !important;
+  cursor: pointer !important;
+  line-height: 1 !important;
+  box-shadow: none !important;
+  height: auto !important;
+  padding: 0 !important;
+  color: #111 !important;
+}
+
+.close-modal:hover {
+  background: transparent !important;
+}
+
+@media screen and (max-width: 768px) {
+  .product-modal {
+    padding: 1rem !important;
+  }
+
+  .product-modal-content {
+    padding: 1.25rem !important;
+  }
+
+  .product-modal-body {
+    flex-direction: column !important;
+  }
+
+  .product-modal-image img {
+    max-width: 100% !important;
+  }
+}

@@ -1,1003 +1,652 @@
 <!DOCTYPE HTML>
-<!--
-	Editorial by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
-	<head>
-		<title>Our Products-By SilverStar Parts</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-	</head>
+<head>
+	<title>Our Products - By SilverStar Parts</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+
+	<style>
+		/* ===== Modal fix override: no need to edit main.css ===== */
+		.product-trigger {
+			cursor: pointer;
+		}
+
+		.product-modal-overlay {
+			display: none !important;
+			position: fixed !important;
+			inset: 0 !important;
+			background: rgba(0, 0, 0, 0.6) !important;
+			z-index: 9998 !important;
+		}
+
+		.product-modal-overlay.active {
+			display: block !important;
+		}
+
+		.product-modal {
+			display: none !important;
+			position: fixed !important;
+			inset: 0 !important;
+			z-index: 9999 !important;
+			align-items: center !important;
+			justify-content: center !important;
+			padding: 2rem !important;
+		}
+
+		.product-modal.active {
+			display: flex !important;
+		}
+
+		.product-modal-content {
+			position: relative !important;
+			background: #fff !important;
+			width: min(900px, calc(100% - 2rem)) !important;
+			max-width: 800px !important;
+			border-radius: 12px !important;
+			padding: 2rem !important;
+			box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2) !important;
+			margin: 0 auto !important;
+		}
+
+		.product-modal-body {
+			display: flex !important;
+			gap: 2rem !important;
+			align-items: flex-start !important;
+			flex-wrap: wrap !important;
+		}
+
+		.product-modal-image img {
+			width: 100% !important;
+			max-width: 280px !important;
+			border-radius: 8px !important;
+			object-fit: contain !important;
+		}
+
+		.product-modal-details {
+			flex: 1 !important;
+			min-width: 260px !important;
+		}
+
+		.close-modal {
+			position: absolute !important;
+			top: 1rem !important;
+			right: 1rem !important;
+			border: none !important;
+			background: transparent !important;
+			font-size: 2rem !important;
+			cursor: pointer !important;
+			line-height: 1 !important;
+			box-shadow: none !important;
+			height: auto !important;
+			padding: 0 !important;
+			color: #111 !important;
+		}
+
+		.close-modal:hover {
+			background: transparent !important;
+		}
+		.cart-toast {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	background: #111;
+	color: #fff;
+	padding: 12px 18px;
+	border-radius: 8px;
+	box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+	opacity: 0;
+	transform: translateY(20px);
+	transition: 0.25s ease;
+	z-index: 999999 !important;
+	font-weight: 500;
+}
+
+.cart-toast.show {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+
+
+		@media screen and (max-width: 768px) {
+			.product-modal {
+				padding: 1rem !important;
+			}
+
+			.product-modal-content {
+				padding: 1.25rem !important;
+			}
+
+			.product-modal-body {
+				flex-direction: column !important;
+			}
+
+			.product-modal-image img {
+				max-width: 100% !important;
+			}
+
+.stock-text {
+color: #16a34a !important;
+font-weight: 600 !important;
+}
+.cart-actions {
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+	margin-top: 1rem;
+}
+
+.qty-input {
+	width: 70px;
+	padding: 0.4rem;
+	text-align: center;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+}
+
+
+.cart-toast.show {
+	opacity: 1;
+	transform: translateY(0);
+}
+		}
+	</style>
+</head>
 
 <body class="products-page">
 
-    <div id="wrapper">
+<div id="wrapper">
 
-      <div id="main">
-        <div class="inner">
+	<div id="main">
+		<div class="inner">
 
-          <!-- Header -->
-    
+			<section>
+				<header class="main">
+					<h1>Explore our products</h1>
+				</header>
 
-							<!-- Content -->
-		<section>
-  <header class="main">
-    <h1>Explore our products</h1>
-  </header>
+				<p id="noResults" style="display:none; font-weight:600; margin-bottom:1rem;">
+					No products found.
+				</p>
 
-  <p id="noResults" style="display:none; font-weight:600; margin-bottom:1rem;">
-  No products found.
-</p>
+				<div class="parts-tabs-wrapper">
+					<div class="parts-tabs">
+						<button class="parts-tab active" data-group="new-parts" type="button">New Parts</button>
+						<button class="parts-tab" data-group="preowned-parts" type="button">Pre-Owned Parts</button>
+						<button class="parts-tab view-all-parts-btn" data-group="all-parts" type="button">View All</button>
+					</div>
+				</div>
 
-  <!-- Top group tabs -->
+				<div class="parts-group active" id="new-parts">
 
-
-  <div class="parts-tabs-wrapper">
-  <div class="parts-tabs">
-    <button class="parts-tab active" data-group="new-parts">New Parts</button>
-    <button class="parts-tab" data-group="preowned-parts">Pre-Owned Parts</button>
-    <button class="parts-tab view-all-parts-btn" data-group="all-parts">View All</button>
-  </div>
-</div>
-
-  <!-- NEW PARTS -->
-  <div class="parts-group active" id="new-parts">
-
-    <div class="category-tabs">
-      <a href="#brakes" class="tab active">Brake Systems</a>
-      <a href="#engine" class="tab">Engine Parts</a>
-      <a href="#electrical" class="tab">Electrical</a>
-      <a href="#lighting" class="tab">Lighting Systems</a>
-    </div>
-
-    <section id="brakes" class="products-panel">
-      <div class="panel-header">
-        <div>
-          <h2>Brake System Parts</h2>
-		    </div>
-  </div>
-       
-
-      <div class="products-row">
-        <article class="product-card">
-         <div
-  class="product-image product-trigger"
-  data-name="Front Brake Pad Set"
-  data-stock="12 in stock"
-  data-use="Used for reducing wheel speed and stopping the vehicle safely."
-  data-price="€89.95"
-  data-image="images/brake1.png"
->
-            <img src="images/brake1.png" alt="Brake Pad Set" />
-            <button class="wishlist-btn">&#9825;</button>
-            <span class="product-badge">New</span>
-          </div>
-          <div class="product-info">
-            <p class="product-name">Front Brake Pad Set</p>
-            <p class="product-price">€89.95</p>
-          </div>
-        </article>
-
-        <article class="product-card">
-          <div
-  class="product-image product-trigger"
-  data-name="Brake Disc Rotor"
-  data-stock="8 in stock"
-  data-use="Works with brake pads to reduce wheel rotation and provide controlled braking."
-  data-price="€129.95"
-  data-image="images/brake2.png"
->
-            <img src="images/brake2.png" alt="Brake Disc Rotor" />
-            <button class="wishlist-btn">&#9825;</button>
-			<span class="product-badge">New</span>
-          </div>
-          <div class="product-info">
-            <p class="product-name">Brake Disc Rotor</p>
-            <p class="product-price">€129.95</p>
-          </div>
-        </article>
-
-        <article class="product-card">
-          <div
-  class="product-image product-trigger"
-  data-name="Rear Brake Caliper"
-  data-stock="6 in stock"
-  data-use="Holds the brake pads and applies pressure to the rotor during braking."
-  data-price="€149.95"
-  data-image="images/brake3.png"
->
-            <img src="images/brake3.png" alt="Brake Caliper" />
-            <button class="wishlist-btn">&#9825;</button>
-            <span class="product-badge">Popular</span>
-          </div>
-          <div class="product-info">
-            <p class="product-name">Rear Brake Caliper</p>
-            <p class="product-price">€149.95</p>
-          </div>
-        </article>
-
-        <article class="product-card">
-          <div
-  class="product-image product-trigger"
-  data-name="Brake Wear Sensor"
-  data-stock="20 in stock"
-  data-use="Monitors brake pad wear and alerts the driver when replacement is needed."
-  data-price="€24.95"
-  data-image="images/brake4.png"
->
-            <img src="images/brake4.png" alt="Brake Wear Sensor" />
-            <button class="wishlist-btn">&#9825;</button>
-			<span class="product-badge">New</span>
-          </div>
-          <div class="product-info">
-            <p class="product-name">Brake Wear Sensor</p>
-            <p class="product-price">€24.95</p>
-          </div>
-        </article>
-
-        <article class="product-card">
-         <div
-  class="product-image product-trigger"
-  data-name="Brake Hose Assembly"
-  data-stock="10 in stock"
-  data-use="Carries brake fluid from the brake line to the caliper for hydraulic braking."
-  data-price="€39.95"
-  data-image="images/brake5.png"
->
-            <img src="images/brake5.png" alt="Brake Hose" />
-            <button class="wishlist-btn">&#9825;</button>
-            <span class="product-badge">New</span>
-          </div>
-          <div class="product-info">
-            <p class="product-name">Brake Hose Assembly</p>
-            <p class="product-price">€39.95</p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <hr class="major" />
-
-    <section id="engine" class="products-panel">
-      <div class="panel-header">
-        <div>
-          <h2>Engine Parts</h2>
-          <p>Browse filters, spark plugs, belts, sensors and essential engine service components.</p>
-        </div>  
-  </div>
-
-
-      <div class="products-row">
-        <article class="product-card">
-         <div
-  class="product-image product-trigger"
-  data-name="Engine Oil Filter"
-  data-stock="15 in stock"
-  data-use="Removes contaminants from engine oil to ensure smooth engine performance and longevity."
-  data-price="€18.95"
-  data-image="images/engine1.png"
->
-            <img src="images/engine1.png" alt="Oil Filter" />
-            <button class="wishlist-btn">&#9825;</button>
-            <span class="product-badge">New</span>
-          </div>
-          <div class="product-info">
-            <p class="product-name">Engine Oil Filter</p>
-            <p class="product-price">€18.95</p>
-          </div>
-        </article>
-
-        <article class="product-card">
-          <div
-  class="product-image product-trigger"
-  data-name="Air Filter Element"
-  data-stock="20 in stock"
-  data-use="Filters incoming air to the engine, preventing dust and debris from entering combustion."
-  data-price="€24.95"
-  data-image="images/engine2.png"
->
-            <img src="images/engine2.png" alt="Air Filter" />
-            <button class="wishlist-btn">&#9825;</button>
-          </div>
-          <div class="product-info">
-            <p class="product-name">Air Filter Element</p>
-            <p class="product-price">€24.95</p>
-          </div>
-        </article>
-
-        <article class="product-card">
-          <div
-  class="product-image product-trigger"
-  data-name="Spark Plug Set"
-  data-stock="10 in stock"
-  data-use="Provides the spark needed to ignite the air-fuel mixture in the engine cylinders."
-  data-price="€49.95"
-  data-image="images/engine3.png"
->
-            <img src="images/engine3.png" alt="Spark Plug Set" />
-            <button class="wishlist-btn">&#9825;</button>
-            <span class="product-badge">Popular</span>
-          </div>
-          <div class="product-info">
-            <p class="product-name">Spark Plug Set</p>
-            <p class="product-price">€49.95</p>
-          </div>
-        </article>
-
-        <article class="product-card">
-          <div
-  class="product-image product-trigger"
-  data-name="Engine Belt Kit"
-  data-stock="7 in stock"
-  data-use="Drives essential engine components such as the alternator, water pump, and air conditioning system."
-  data-price="€64.95"
-  data-image="images/engine4.png"
->
-            <img src="images/engine4.png" alt="Engine Belt Kit" />
-            <button class="wishlist-btn">&#9825;</button>
-          </div>
-          <div class="product-info">
-            <p class="product-name">Engine Belt Kit</p>
-            <p class="product-price">€64.95</p>
-          </div>
-        </article>
-
-        <article class="product-card">
-         <div
-  class="product-image product-trigger"
-  data-name="MAF Sensor"
-  data-stock="9 in stock"
-  data-use="Measures the amount of air entering the engine to optimize fuel injection and performance."
-  data-price="€79.95"
-  data-image="images/engine5.png"
->
-            <img src="images/engine5.png" alt="MAF Sensor" />
-            <button class="wishlist-btn">&#9825;</button>
-            <span class="product-badge">New</span>
-          </div>
-          <div class="product-info">
-            <p class="product-name">MAF Sensor</p>
-            <p class="product-price">€79.95</p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <hr class="major" />
-
-    <section id="electrical" class="products-panel">
-      <div class="panel-header">
-        <div>
-          <h2>Electrical &amp; Sensor Components</h2>
-		    </div>
-  </div>
-       
-
-      <div class="products-row">
-        <article class="product-card">
-          <div
-  class="product-image product-trigger"
-  data-name="Alternator"
-  data-stock="6 in stock"
-  data-use="Generates electrical power to charge the battery and run vehicle electronics."
-  data-price="€189.95"
-  data-image="images/el1.png"
->
-            <img src="images/el1.png" alt="Alternator" />
-            <button class="wishlist-btn">&#9825;</button>
-            <span class="product-badge">New</span>
-          </div>
-          <div class="product-info">
-            <p class="product-name">Alternator</p>
-            <p class="product-price">€189.95</p>
-          </div>
-        </article>
-
-        <article class="product-card">
-          <div
-  class="product-image product-trigger"
-  data-name="Starter Motor"
-  data-stock="5 in stock"
-  data-use="Cranks the engine to start the vehicle by turning the crankshaft."
-  data-price="€159.95"
-  data-image="images/el2.png"
->
-            <img src="images/el2.png" alt="Starter Motor" />
-            <button class="wishlist-btn">&#9825;</button>
-            <span class="product-badge">Popular</span>
-          </div>
-          <div class="product-info">
-            <p class="product-name">Starter Motor</p>
-            <p class="product-price">€159.95</p>
-          </div>
-        </article>
-
-        <article class="product-card">
-          <div
-  class="product-image product-trigger"
-  data-name="Oxygen (O2) Sensor"
-  data-stock="14 in stock"
-  data-use="Measures oxygen levels in exhaust gases to optimize fuel efficiency and emissions."
-  data-price="€69.95"
-  data-image="images/el3.png"
->
-            <img src="images/el3.png" alt="Oxygen Sensor" />
-            <button class="wishlist-btn">&#9825;</button>
-            <span class="product-badge">New</span>
-          </div>
-          <div class="product-info">
-            <p class="product-name">Oxygen (O2) Sensor</p>
-            <p class="product-price">€69.95</p>
-          </div>
-        </article>
-
-        <article class="product-card">
-          <div
-  class="product-image product-trigger"
-  data-name="MAF Sensor"
-  data-stock="9 in stock"
-  data-use="Monitors air intake to ensure correct fuel-to-air ratio for engine performance."
-  data-price="€79.95"
-  data-image="images/el4.png"
->
-            <img src="images/el4.png" alt="MAF Sensor" />
-            <button class="wishlist-btn">&#9825;</button>
-            <span class="product-badge">New</span>
-          </div>
-          <div class="product-info">
-            <p class="product-name">MAF Sensor</p>
-            <p class="product-price">€79.95</p>
-          </div>
-        </article>
-
-        <article class="product-card">
-          <div
-  class="product-image product-trigger"
-  data-name="Ignition Coil"
-  data-stock="11 in stock"
-  data-use="Converts battery voltage into high voltage needed to ignite the fuel mixture."
-  data-price="€54.95"
-  data-image="images/el5.png"
->
-            <img src="images/el5.png" alt="Ignition Coil" />
-            <button class="wishlist-btn">&#9825;</button>
-          </div>
-          <div class="product-info">
-            <p class="product-name">Ignition Coil</p>
-            <p class="product-price">€54.95</p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <hr class="major" />
-
-   <section id="lighting" class="products-panel">
-  <div class="panel-header">
-    <div>
-      <h2>Lighting Systems</h2>
-      <p>Browse headlights, taillights, fog lights, turn signals and LED bulbs.</p>
-    </div>
-  </div>
-
-  <div class="products-row">>
-        <article class="product-card">
-          <div
-  class="product-image product-trigger"
-  data-name="LED Headlight Assembly"
-  data-stock="7 in stock"
-  data-use="Provides bright forward illumination for safe night driving and visibility."
-  data-price="€249.95"
-  data-image="images/light1.png"
->
-            <img src="images/light1.png" alt="Headlight Assembly" />
-            <button class="wishlist-btn">&#9825;</button>
-            <span class="product-badge">New</span>
-          </div>
-          <div class="product-info">
-            <p class="product-name">LED Headlight Assembly</p>
-            <p class="product-price">€249.95</p>
-          </div>
-        </article>
-
-        <article class="product-card">
-         <div
-  class="product-image product-trigger"
-  data-name="Rear Tail Light Unit"
-  data-stock="10 in stock"
-  data-use="Displays braking, reversing and signaling functions for vehicles behind."
-  data-price="€119.95"
-  data-image="images/light2.png"
->
-            <img src="images/light2.png" alt="Tail Light Unit" />
-            <button class="wishlist-btn">&#9825;</button>
-          </div>
-          <div class="product-info">
-            <p class="product-name">Rear Tail Light Unit</p>
-            <p class="product-price">€119.95</p>
-          </div>
-        </article>
-
-        <article class="product-card">
-          <div
-  class="product-image product-trigger"
-  data-name="Fog Light Assembly"
-  data-stock="13 in stock"
-  data-use="Improves visibility in fog, rain, and low-visibility driving conditions."
-  data-price="€69.95"
-  data-image="images/light3.png"
->
-            <img src="images/light3.png" alt="Fog Light" />
-            <button class="wishlist-btn">&#9825;</button>
-            <span class="product-badge">Popular</span>
-          </div>
-          <div class="product-info">
-            <p class="product-name">Fog Light Assembly</p>
-            <p class="product-price">€69.95</p>
-          </div>
-        </article>
-
-        <article class="product-card">
-          <div
-  class="product-image product-trigger"
-  data-name="Turn Signal Indicator"
-  data-stock="18 in stock"
-  data-use="Signals direction changes to other drivers for safer road communication."
-  data-price="€34.95"
-  data-image="images/light1.png"
->
-            <img src="images/light1.png" alt="Turn Signal Light" />
-            <button class="wishlist-btn">&#9825;</button>
-			<span class="product-badge">New</span>
-          </div>
-          <div class="product-info">
-            <p class="product-name">Turn Signal Indicator</p>
-            <p class="product-price">€34.95</p>
-          </div>
-        </article>
-
-        <article class="product-card">
-         <div
-  class="product-image product-trigger"
-  data-name="LED Light Bulb Set"
-  data-stock="25 in stock"
-  data-use="Energy-efficient bulbs providing bright illumination for various vehicle lights."
-  data-price="€29.95"
-  data-image="images/light1.png"
->
-            <img src="images/light1.png" alt="LED Bulb" />
-            <button class="wishlist-btn">&#9825;</button>
-            <span class="product-badge">New</span>
-          </div>
-          <div class="product-info">
-            <p class="product-name">LED Light Bulb Set</p>
-            <p class="product-price">€29.95</p>
-          </div>
-        </article>
-      </div>
-    </section>
-  </div>
-
-  <!-- PRE-OWNED PARTS -->
-  <div class="parts-group" id="preowned-parts">
-
-    <div class="category-tabs">
-      <a  class="tab active">Other Parts</a>
-    </div>
-
-    <section id="other" class="products-panel">
-      <div class="panel-header">
-        <div>
-          <h2>Other Parts</h2>
-          <p>Browse additional components including gearboxes, mirrors, radiators and body parts.</p>
-          </div>
-  </div>
-
-      <div class="products-row">
-        <article class="product-card">
-          <div
-  class="product-image product-trigger"
-  data-name="Alternator (Pre-Owned)"
-  data-stock="3 in stock"
-  data-use="Supplies electrical power and charges the battery while the engine is running."
-  data-price="€95.00"
-  data-image="images/alternator.png"
->
-            <img src="images/alternator.png" alt="Alternator" />
-            <button class="wishlist-btn">&#9825;</button>
-            <span class="product-badge">Pre-Owned</span>
-          </div>
-          <div class="product-info">
-            <p class="product-name">Alternator</p>
-            <p class="product-price">€95.00</p>
-          </div>
-        </article>
-
-        <article class="product-card">
-         <div
-  class="product-image product-trigger"
-  data-name="Starter Motor (Pre-Owned)"
-  data-stock="4 in stock"
-  data-use="Engages the engine to start the vehicle by rotating the crankshaft."
-  data-price="€89.00"
-  data-image="images/startermotor.png"
->
-            <img src="images/startermotor.png" alt="Starter Motor" />
-            <button class="wishlist-btn">&#9825;</button>
-            <span class="product-badge">Popular</span>
-          </div>
-          <div class="product-info">
-            <p class="product-name">Starter Motor</p>
-            <p class="product-price">€89.00</p>
-          </div>
-        </article>
-
-        <article class="product-card">
-          <div
-  class="product-image product-trigger"
-  data-name="Gearbox"
-  data-stock="2 in stock"
-  data-use="Transfers engine power to the wheels and allows gear shifting for speed control."
-  data-price="€350.00"
-  data-image="images/gearbox.png"
->
-            <img src="images/gearbox.png" alt="Gearbox" />
-            <button class="wishlist-btn">&#9825;</button>
-            <span class="product-badge">Pre-Owned</span>
-          </div>
-          <div class="product-info">
-            <p class="product-name">Gearbox</p>
-            <p class="product-price">€350.00</p>
-          </div>
-        </article>
-
-        <article class="product-card">
-          <div
-  class="product-image product-trigger"
-  data-name="Body Panel"
-  data-stock="5 in stock"
-  data-use="Exterior vehicle panel used for structural protection and appearance."
-  data-price="€140.00"
-  data-image="images/door.png"
->
-            <img src="images/door.png" alt="Body Panel" />
-            <button class="wishlist-btn">&#9825;</button>
-			 <span class="product-badge">Pre-Owned</span>
-          </div>
-          <div class="product-info">
-            <p class="product-name">Body Panel</p>
-            <p class="product-price">€140.00</p>
-          </div>
-        </article>
-
-        <article class="product-card">
-          <div
-  class="product-image product-trigger"
-  data-name="Side Mirror"
-  data-stock="6 in stock"
-  data-use="Provides rear and side visibility for safer driving and lane changes."
-  data-price="€55.00"
-  data-image="images/mirror.png"
->
-            <img src="images/mirror.png" alt="Side Mirror" />
-            <button class="wishlist-btn">&#9825;</button>
-			 <span class="product-badge">Pre-Owned</span>
-          </div>
-          <div class="product-info">
-            <p class="product-name">Side Mirror</p>
-            <p class="product-price">€55.00</p>
-          </div>
-        </article>
-
-        <article class="product-card">
-         <div
-  class="product-image product-trigger"
-  data-name="Radiator"
-  data-stock="4 in stock"
-  data-use="Cools engine coolant by dissipating heat to prevent engine overheating."
-  data-price="€120.00"
-  data-image="images/radiator.png"
->
-            <img src="images/radiator.png" alt="Radiator" />
-            <button class="wishlist-btn">&#9825;</button>
-            <span class="product-badge">Pre-Owned</span>
-          </div>
-          <div class="product-info">
-            <p class="product-name">Radiator</p>
-            <p class="product-price">€120.00</p>
-          </div>
-        </article>
-      </div>
-    </section>
-  </div>
-</section>
-  </div>
-      </div>
-
-
-				<!-- Sidebar -->
-					<div id="sidebar">
-						<div class="inner">
-
-							<!-- Search -->
-								<section id="search" class="alt">
-									<form onsubmit="return false;">
-										<input type="text" name="query" id="query" placeholder="Search" />
-									</form>
-								</section>
-
-							<!-- Menu -->
-								<nav id="menu">
-									<header class="major">
-										<h2>Menu</h2>
-									</header>
-									<ul>
-										<li><a href="index.html">Homepage</a></li>
-										<li><a href="generic.html">Products</a></li>
-										<li><a href="addproduct.html">Add Product</a></li>
-										<li>
-											<span class="opener">Submenu</span>
-											<ul>
-												<li><a href="#">Lorem Dolor</a></li>
-												<li><a href="#">Ipsum Adipiscing</a></li>
-												<li><a href="#">Tempus Magna</a></li>
-												<li><a href="#">Feugiat Veroeros</a></li>
-											</ul>
-										</li>
-										<li><a href="#">Etiam Dolore</a></li>
-										<li><a href="#">Adipiscing</a></li>
-										<li>
-											<span class="opener">Another Submenu</span>
-											<ul>
-												<li><a href="#">Lorem Dolor</a></li>
-												<li><a href="#">Ipsum Adipiscing</a></li>
-												<li><a href="#">Tempus Magna</a></li>
-												<li><a href="#">Feugiat Veroeros</a></li>
-											</ul>
-										</li>
-										<li><a href="#">Maximus Erat</a></li>
-										<li><a href="#">Sapien Mauris</a></li>
-										<li><a href="#">Amet Lacinia</a></li>
-									</ul>
-								</nav>
-
-							<!-- Section -->
-								<section>
-									<header class="major">
-										<h2>Ante interdum</h2>
-									</header>
-									<div class="mini-posts">
-										<article>
-											<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-									</div>
-									<ul class="actions">
-										<li><a href="#" class="button">More</a></li>
-									</ul>
-								</section>
-
-							<!-- Section -->
-								<section>
-									<header class="major">
-										<h2>Get in touch</h2>
-									</header>
-									<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-									<ul class="contact">
-										<li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
-										<li class="icon solid fa-phone">(000) 000-0000</li>
-										<li class="icon solid fa-home">1234 Somewhere Road #8254<br />
-										Nashville, TN 00000-0000</li>
-									</ul>
-								</section>
-
-							<!-- Footer -->
-								<footer id="footer">
-									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-								</footer>
-
-						</div>
+					<div class="category-tabs">
+						<a href="#brakes" class="tab active">Brake Systems</a>
+						<a href="#engine" class="tab">Engine Parts</a>
+						<a href="#electrical" class="tab">Electrical</a>
+						<a href="#lighting" class="tab">Lighting Systems</a>
 					</div>
 
+					<section id="brakes" class="products-panel">
+						<div class="panel-header">
+							<div>
+								<h2>Brake System Parts</h2>
+							</div>
+						</div>
+						<div class="products-row"></div>
+					</section>
+
+					<hr class="major" />
+
+					<section id="engine" class="products-panel">
+						<div class="panel-header">
+							<div>
+								<h2>Engine Parts</h2>
+								<p>Browse filters, spark plugs, belts, sensors and essential engine service components.</p>
+							</div>
+						</div>
+						<div class="products-row"></div>
+					</section>
+
+					<hr class="major" />
+
+					<section id="electrical" class="products-panel">
+						<div class="panel-header">
+							<div>
+								<h2>Electrical &amp; Sensor Components</h2>
+							</div>
+						</div>
+						<div class="products-row"></div>
+					</section>
+
+					<hr class="major" />
+
+					<section id="lighting" class="products-panel">
+						<div class="panel-header">
+							<div>
+								<h2>Lighting Systems</h2>
+								<p>Browse headlights, taillights, fog lights, turn signals and LED bulbs.</p>
+							</div>
+						</div>
+						<div class="products-row"></div>
+					</section>
+				</div>
+
+				<div class="parts-group" id="preowned-parts">
+					<div class="category-tabs">
+						<a href="#other" class="tab active">Other Parts</a>
+					</div>
+
+					<section id="other" class="products-panel">
+						<div class="panel-header">
+							<div>
+								<h2>Other Parts</h2>
+								<p>Browse additional components including gearboxes, mirrors, radiators and body parts.</p>
+							</div>
+						</div>
+						<div class="products-row"></div>
+					</section>
+				</div>
+			</section>
+
+		</div>
+	</div>
+
+	<div id="sidebar">
+		<div class="inner">
+
+			<section id="search" class="alt">
+				<form onsubmit="return false;">
+					<input type="text" name="query" id="query" placeholder="Search" />
+				</form>
+			</section>
+
+			<nav id="menu">
+				<header class="major">
+					<h2>Menu</h2>
+				</header>
+				<ul>
+					<li><a href="index.html">Homepage</a></li>
+					<li><a href="generic.html">Products</a></li>
+					<li><a href="addproduct.html">Add Product</a></li>
+					<li><a href="ordershistory.html">Order History</a></li>
+					<li><a href="cart.html">Cart</a></li>
+				</ul>
+			</nav>
+
+			<section>
+				<header class="major">
+					<h2>About Us</h2>
+				</header>
+				<div class="mini-posts">
+					<article>
+						<a class="image"><img src="images/us1.png" alt="" /></a>
+						<p>We specialize in providing <strong><span class="brand-name">high-quality</span></strong> original and carefully inspected pre-owned components for Mercedes-Benz vehicles.</p>
+					</article>
+					<article>
+						<a class="image"><img src="images/us2.png" alt="" /></a>
+						<p>Delivering quality, reliability, and performance since 1986.</p>
+					</article>
+					<article>
+						<a class="image"><img src="images/us3.png" alt="" /></a>
+						<ul>
+							<li>High-quality original and pre-owned Mercedes-Benz parts</li>
+							<li>Affordable pricing without compromising reliability</li>
+							<li>Trusted suppliers and verified sourcing</li>
+							<li>Fast and reliable service</li>
+							<li>Years of industry experience and expertise</li>
+						</ul>
+					</article>
+				</div>
+			</section>
+
+			<section>
+				<header class="major">
+					<h2>Get in touch</h2>
+				</header>
+				<p>Have questions or need assistance? Our team is here to help. Whether you're looking for specific Mercedes-Benz parts or need expert guidance, feel free to reach out. We are committed to providing fast, reliable support and ensuring you find exactly what you need.</p>
+				<ul class="contact">
+					<li class="icon solid fa-envelope"><a href="mailto:starkchamunorwa2904@gmail.com">starkchamunorwa2904@gmail.com</a></li>
+					<li class="icon solid fa-phone">(+491) 5781137655</li>
+					<li class="icon solid fa-home">1234 Somewhere Road #8254<br />Nashville, TN 00000-0000</li>
+				</ul>
+			</section>
+
+			<footer id="footer">
+				<p class="copyright">&copy; SilverStar Parts. All rights reserved.</p>
+			</footer>
+
+		</div>
+	</div>
+
+</div>
+
+<div class="product-modal-overlay" id="productModalOverlay"></div>
+
+<div id="productModal" class="product-modal" aria-hidden="true">
+	<div class="product-modal-content">
+		<button id="closeProductModal" type="button" class="close-modal" aria-label="Close modal">&times;</button>
+
+		<div class="product-modal-body">
+			<div class="product-modal-image">
+				<img id="modalProductImage" src="" alt="Product image" />
 			</div>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<!-- PRODUCT MODAL -->
-<div class="product-modal" id="productModal" aria-hidden="true">
-  <div class="product-modal-overlay"></div>
+			<div class="product-modal-details">
+				<h2 id="modalProductName"></h2>
+				<p id="modalProductStock" class="stock-text"></p>
+				<p id="modalProductUse"></p>
+				<h3 id="modalProductPrice"></h3>
 
-  <div class="product-modal-content">
-    <button class="product-modal-close" id="closeProductModal" type="button">&times;</button>
-
-    <div class="product-modal-grid">
-      <div class="product-modal-image">
-        <img id="modalProductImage" src="" alt="">
-      </div>
-
-      <div class="product-modal-details">
-        <h2 id="modalProductName"></h2>
-        <p class="modal-stock" id="modalProductStock"></p>
-        <p class="modal-use" id="modalProductUse"></p>
-        <p class="modal-price" id="modalProductPrice"></p>
-
-        <div class="modal-actions">
-          <button class="add-to-cart-btn" id="addToCartBtn" type="button">
-            Add to Cart
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
+				<div class="cart-actions">
+	<input type="number" id="quantityInput" min="1" value="1" class="qty-input" />
+	<button id="addToCartBtn" type="button" class="button primary">
+		Add to Cart
+	</button>
 </div>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="cartToast" class="cart-toast">
+	✔ Added to cart
+</div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const partsTabs = document.querySelectorAll(".parts-tab");
-  const newParts = document.getElementById("new-parts");
-  const preownedParts = document.getElementById("preowned-parts");
-  const categoryTabsContainers = document.querySelectorAll(".category-tabs");
+document.addEventListener("DOMContentLoaded", async function () {
+	const partsTabs = document.querySelectorAll(".parts-tab");
+	const newParts = document.getElementById("new-parts");
+	const preownedParts = document.getElementById("preowned-parts");
+	const queryInput = document.getElementById("query");
+	const noResults = document.getElementById("noResults");
 
-  function showGroup(group) {
-    partsTabs.forEach((item) => item.classList.remove("active"));
+	const modal = document.getElementById("productModal");
+	const overlay = document.getElementById("productModalOverlay");
+	const closeBtn = document.getElementById("closeProductModal");
+	const addToCartBtn = document.getElementById("addToCartBtn");
+	const cartToast = document.getElementById("cartToast");
+	const quantityInput = document.getElementById("quantityInput");
 
-    if (group === "new-parts") {
-      document.querySelector('[data-group="new-parts"]').classList.add("active");
-      newParts.classList.add("active");
-      preownedParts.classList.remove("active");
+	const modalImage = document.getElementById("modalProductImage");
+	const modalName = document.getElementById("modalProductName");
+	const modalStock = document.getElementById("modalProductStock");
+	const modalUse = document.getElementById("modalProductUse");
+	const modalPrice = document.getElementById("modalProductPrice");
 
-      categoryTabsContainers.forEach((el) => (el.style.display = ""));
-      const preownedTabs = preownedParts.querySelector(".category-tabs");
-      if (preownedTabs) preownedTabs.style.display = "none";
-    }
+	function setActiveCategoryTab(target) {
+		document.querySelectorAll(".category-tabs .tab").forEach((tab) => {
+			tab.classList.remove("active");
+		});
+		if (target) target.classList.add("active");
+	}
 
-    if (group === "preowned-parts") {
-      document.querySelector('[data-group="preowned-parts"]').classList.add("active");
-      preownedParts.classList.add("active");
-      newParts.classList.remove("active");
+	document.querySelectorAll(".category-tabs .tab").forEach((tab) => {
+		tab.addEventListener("click", function (e) {
+			const href = this.getAttribute("href");
+			if (!href) return;
 
-     categoryTabsContainers.forEach((el) => el.style.display = "");
-      const newTabs = newParts.querySelector(".category-tabs");
-      if (newTabs) newTabs.style.display = "none";
-    }
+			e.preventDefault();
+			setActiveCategoryTab(this);
 
-    if (group === "all-parts") {
-      document.querySelector('[data-group="all-parts"]').classList.add("active");
-      newParts.classList.add("active");
-      preownedParts.classList.add("active");
+			const targetSection = document.querySelector(href);
+			if (targetSection) {
+				targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
+			}
+		});
+	});
 
-      categoryTabsContainers.forEach((el) => (el.style.display = "none"));
-    }
-  }
+	function showGroup(group) {
+		partsTabs.forEach((item) => item.classList.remove("active"));
 
-  partsTabs.forEach((tab) => {
-    tab.addEventListener("click", function () {
-      const targetGroup = this.getAttribute("data-group");
-      showGroup(targetGroup);
-    });
-  });
+		if (group === "new-parts") {
+			document.querySelector('[data-group="new-parts"]').classList.add("active");
+			newParts.classList.add("active");
+			preownedParts.classList.remove("active");
+		}
 
-  //  FORCE RESET WHEN CLICKING TABS (FIXES YOUR ISSUE)
-partsTabs.forEach((tab) => {
-  tab.addEventListener("click", function () {
+		if (group === "preowned-parts") {
+			document.querySelector('[data-group="preowned-parts"]').classList.add("active");
+			preownedParts.classList.add("active");
+			newParts.classList.remove("active");
+		}
 
-    // clear search
-    const searchInput = document.getElementById("query");
-    if (searchInput) searchInput.value = "";
+		if (group === "all-parts") {
+			document.querySelector('[data-group="all-parts"]').classList.add("active");
+			newParts.classList.add("active");
+			preownedParts.classList.add("active");
+		}
+	}
 
-    // remove search mode
-    document.body.classList.remove("search-active");
+	partsTabs.forEach((tab) => {
+		tab.addEventListener("click", function () {
+			showGroup(this.getAttribute("data-group"));
+			resetSearch();
+		});
+	});
 
-    // reset all cards
-    document.querySelectorAll(".product-card").forEach(card => {
-      card.style.display = "";
-    });
+	showGroup("new-parts");
 
-    // reset all sections
-    document.querySelectorAll(".products-panel").forEach(section => {
-      section.style.display = "";
-    });
+	function createProductCard(p) {
+		const card = document.createElement("article");
+		card.className = "product-card";
 
-    // reset highlighted text
-    document.querySelectorAll(".product-name").forEach(el => {
-      el.innerHTML = el.textContent;
-    });
+		const badgeText = p.condition === "preowned" ? "Pre-Owned" : "New";
+		const stockText = `${p.stock} in stock`;
+		const imagePath = p.image || "images/pic01.jpg";
 
-    // hide "no results"
-    const noResults = document.getElementById("noResults");
-    if (noResults) noResults.style.display = "none";
+		card.innerHTML = `
+			<div
+				class="product-image product-trigger"
+				data-id="${p._id || ""}"
+				data-name="${p.name || ""}"
+				data-stock="${stockText}"
+				data-use="${p.description || ""}"
+				data-price="€${Number(p.price || 0).toFixed(2)}"
+				data-raw-price="${Number(p.price || 0)}"
+				data-image="${imagePath}"
+			>
+				<img src="${imagePath}" alt="${p.name || "Product"}" />
+				<button class="wishlist-btn" type="button">&#9825;</button>
+				<span class="product-badge">${badgeText}</span>
+			</div>
+			<div class="product-info">
+				<p class="product-name">${p.name || ""}</p>
+				<p class="product-price">€${Number(p.price || 0).toFixed(2)}</p>
+			</div>
+		`;
 
-  });
+		return card;
+	}
+
+	function getTargetRow(product) {
+		if (product.condition === "preowned") return document.querySelector("#other .products-row");
+		if (product.category === "brakes") return document.querySelector("#brakes .products-row");
+		if (product.category === "engine") return document.querySelector("#engine .products-row");
+		if (product.category === "electrical") return document.querySelector("#electrical .products-row");
+		if (product.category === "lighting") return document.querySelector("#lighting .products-row");
+		return document.querySelector("#other .products-row");
+	}
+
+	async function loadProducts() {
+		try {
+			const res = await fetch("/api/products");
+			const products = await res.json();
+
+			document.querySelectorAll(".products-row").forEach((row) => {
+				row.innerHTML = "";
+			});
+
+			products.forEach((p) => {
+				const target = getTargetRow(p);
+				if (target) target.appendChild(createProductCard(p));
+			});
+		} catch (err) {
+			console.error("Failed to load products", err);
+		}
+	}
+
+	function resetSearch() {
+		if (queryInput) queryInput.value = "";
+		document.body.classList.remove("search-active");
+
+		document.querySelectorAll(".product-card").forEach(card => {
+			card.style.display = "";
+		});
+
+		document.querySelectorAll(".products-panel").forEach(section => {
+			section.style.display = "";
+			section.classList.remove("is-empty");
+		});
+
+		document.querySelectorAll(".product-name").forEach(el => {
+			el.innerHTML = el.textContent;
+		});
+
+		if (noResults) noResults.style.display = "none";
+	}
+
+	function escapeRegExp(string) {
+		return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+	}
+
+	function highlight(text, value) {
+		if (!value) return text;
+		const regex = new RegExp(`(${escapeRegExp(value)})`, "gi");
+		return text.replace(regex, "<mark>$1</mark>");
+	}
+
+	await loadProducts();
+
+	if (queryInput) {
+		queryInput.addEventListener("input", function () {
+			const value = this.value.trim().toLowerCase();
+			const allCards = document.querySelectorAll(".product-card");
+			const sections = document.querySelectorAll(".products-panel");
+
+			if (value !== "") {
+				document.body.classList.add("search-active");
+				showGroup("all-parts");
+
+				let totalMatches = 0;
+
+				allCards.forEach((card) => {
+					const trigger = card.querySelector(".product-trigger");
+					const name = trigger?.dataset.name?.toLowerCase() || "";
+					const use = trigger?.dataset.use?.toLowerCase() || "";
+					const stock = trigger?.dataset.stock?.toLowerCase() || "";
+					const nameEl = card.querySelector(".product-name");
+					const visibleName = nameEl?.textContent.toLowerCase() || "";
+
+					const matches =
+						name.includes(value) ||
+						visibleName.includes(value) ||
+						use.includes(value) ||
+						stock.includes(value);
+
+					card.style.display = matches ? "" : "none";
+
+					if (nameEl) {
+						nameEl.innerHTML = matches ? highlight(nameEl.textContent, value) : nameEl.textContent;
+					}
+
+					if (matches) totalMatches++;
+				});
+
+				sections.forEach((section) => {
+					const visibleCards = section.querySelectorAll('.product-card:not([style*="display: none"])');
+					const hasVisible = visibleCards.length > 0;
+					section.style.display = hasVisible ? "" : "none";
+					section.classList.toggle("is-empty", !hasVisible);
+				});
+
+				if (noResults) noResults.style.display = totalMatches === 0 ? "block" : "none";
+			} else {
+				resetSearch();
+				showGroup("new-parts");
+			}
+		});
+	}
+
+	document.addEventListener("click", function (e) {
+		const item = e.target.closest(".product-trigger");
+		if (!item) return;
+		if (e.target.closest(".wishlist-btn")) return;
+
+		modalImage.src = item.dataset.image || "images/pic01.jpg";
+		modalImage.alt = item.dataset.name || "Product image";
+		modalName.textContent = item.dataset.name || "";
+		modalStock.textContent = item.dataset.stock || "";
+modalStock.style.color = "#16a34a";
+modalStock.style.fontWeight = "600";
+		modalUse.textContent = item.dataset.use || "";
+		modalPrice.textContent = item.dataset.price || "€0.00";
+
+		addToCartBtn.dataset.id = item.dataset.id || "";
+		addToCartBtn.dataset.name = item.dataset.name || "";
+		addToCartBtn.dataset.price = item.dataset.rawPrice || "0";
+		addToCartBtn.dataset.image = item.dataset.image || "images/pic01.jpg";
+
+		modal.classList.add("active");
+		overlay.classList.add("active");
+		modal.setAttribute("aria-hidden", "false");
+		document.body.style.overflow = "hidden";
+	});
+
+	function closeModal() {
+		modal.classList.remove("active");
+		overlay.classList.remove("active");
+		modal.setAttribute("aria-hidden", "true");
+		document.body.style.overflow = "";
+	}
+
+	if (closeBtn) closeBtn.addEventListener("click", closeModal);
+	if (overlay) overlay.addEventListener("click", closeModal);
+
+	document.addEventListener("keydown", function (e) {
+		if (e.key === "Escape" && modal.classList.contains("active")) {
+			closeModal();
+		}
+	});
+
+	if (addToCartBtn) {
+		addToCartBtn.addEventListener("click", function () {
+	const id = this.dataset.id;
+	const name = this.dataset.name;
+	const price = Number(this.dataset.price);
+	const image = this.dataset.image;
+	const quantity = Math.max(1, Number(quantityInput.value) || 1);
+
+	if (!id) {
+		alert("Product could not be added.");
+		return;
+	}
+
+	const cart = JSON.parse(localStorage.getItem("cart")) || [];
+	const existing = cart.find(item => item.product === id);
+
+	if (existing) {
+		existing.quantity += quantity;
+	} else {
+		cart.push({
+			product: id,
+			name,
+			price,
+			image,
+			quantity: quantity
+		});
+	}
+
+	localStorage.setItem("cart", JSON.stringify(cart));
+	if (window.updateCartBadge) window.updateCartBadge();
+	cartToast.classList.add("show");
+setTimeout(() => {
+	cartToast.classList.remove("show");
+}, 2000);
+	closeModal();
 });
-
-  showGroup("new-parts");
-
-  // PRODUCT MODAL
-  const productTriggers = document.querySelectorAll(".product-trigger");
-  const modal = document.getElementById("productModal");
-  const overlay = document.querySelector(".product-modal-overlay");
-  const closeBtn = document.getElementById("closeProductModal");
-
-  const modalImage = document.getElementById("modalProductImage");
-  const modalName = document.getElementById("modalProductName");
-  const modalStock = document.getElementById("modalProductStock");
-  const modalUse = document.getElementById("modalProductUse");
-  const modalPrice = document.getElementById("modalProductPrice");
-
-  productTriggers.forEach((item) => {
-    item.addEventListener("click", function (e) {
-      if (e.target.closest(".wishlist-btn")) return;
-
-      modalImage.src = this.dataset.image;
-      modalImage.alt = this.dataset.name;
-      modalName.textContent = this.dataset.name;
-      modalStock.textContent = this.dataset.stock;
-      modalUse.textContent = this.dataset.use;
-      modalPrice.textContent = this.dataset.price;
-
-      modal.classList.add("active");
-      document.body.style.overflow = "hidden";
-    });
-  });
-
-  function closeModal() {
-    modal.classList.remove("active");
-    document.body.style.overflow = "";
-  }
-
-  if (closeBtn) closeBtn.addEventListener("click", closeModal);
-  if (overlay) overlay.addEventListener("click", closeModal);
-
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && modal.classList.contains("active")) {
-      closeModal();
-    }
-  });
-// SEARCH
-const searchInput = document.getElementById("query");
-const sections = document.querySelectorAll(".products-panel");
-const allCards = document.querySelectorAll(".product-card");
-
-function highlight(text, value) {
-  if (!value) return text;
-  const regex = new RegExp(`(${value})`, "gi");
-  return text.replace(regex, "<mark>$1</mark>");
-}
-
-if (searchInput) {
-  searchInput.addEventListener("input", function () {
-    const value = this.value.trim().toLowerCase();
-
-    //  SEARCH MODE
-    if (value !== "") {
-      document.body.classList.add("search-active");
-      showGroup("all-parts");
-
-      let totalMatches = 0;
-
-      allCards.forEach((card) => {
-        const trigger = card.querySelector(".product-trigger");
-
-        const name = trigger?.dataset.name?.toLowerCase() || "";
-        const use = trigger?.dataset.use?.toLowerCase() || "";
-        const stock = trigger?.dataset.stock?.toLowerCase() || "";
-
-        const nameEl = card.querySelector(".product-name");
-        const visibleName = nameEl?.textContent.toLowerCase() || "";
-
-        const matches =
-          name.includes(value) ||
-          visibleName.includes(value) ||
-          use.includes(value) ||
-          stock.includes(value);
-
-        card.style.display = matches ? "" : "none";
-
-        if (nameEl) {
-          nameEl.innerHTML = highlight(nameEl.textContent, value);
-        }
-
-        if (matches) totalMatches++;
-      });
-
-      // hide empty sections
-      sections.forEach((section) => {
-        const visibleCards = section.querySelectorAll(
-          '.product-card:not([style*="display: none"])'
-        );
-        section.style.display = visibleCards.length ? "" : "none";
-      });
-
-      // no results message
-      const noResults = document.getElementById("noResults");
-      if (noResults) {
-        noResults.style.display = totalMatches === 0 ? "block" : "none";
-      }
-
-    } 
-    
-    //  RESET MODE (THIS WAS BROKEN BEFORE)
-    else {
-      document.body.classList.remove("search-active");
-
-      // show all cards
-      allCards.forEach((card) => {
-        card.style.display = "";
-      });
-
-      // reset names (remove highlight)
-      document.querySelectorAll(".product-name").forEach((el) => {
-        el.innerHTML = el.textContent;
-      });
-
-      // show all sections
-      sections.forEach((section) => {
-        section.style.display = "";
-      });
-
-      // hide no results
-      const noResults = document.getElementById("noResults");
-      if (noResults) noResults.style.display = "none";
-
-      //  IMPORTANT: fully restore tabs
-      showGroup("new-parts");
-    }
-  });
-}
-
-const savedProducts = JSON.parse(localStorage.getItem("products")) || [];
-
-savedProducts.forEach((p) => {
-  const card = document.createElement("article");
-  card.className = "product-card";
-
-  card.innerHTML = `
-    <div
-      class="product-image product-trigger"
-      data-name="${p.name}"
-      data-stock="${p.stock}"
-      data-use="${p.use}"
-      data-price="€${p.price}"
-      data-image="${p.image}"
-    >
-      <img src="${p.image}" alt="${p.name}" />
-      <button class="wishlist-btn">&#9825;</button>
-      <span class="product-badge">${p.group === "preowned" ? "Pre-Owned" : "New"}</span>
-    </div>
-    <div class="product-info">
-      <p class="product-name">${p.name}</p>
-      <p class="product-price">€${p.price}</p>
-    </div>
-  `;
-
-  const target =
-    p.group === "preowned"
-      ? document.querySelector("#preowned-parts .products-row")
-      : document.querySelector("#new-parts .products-row");
-
-  if (target) target.appendChild(card);
-});
-
+	}
 });
 </script>
 
-
-
-	
-	</body>
+</body>
 </html>
