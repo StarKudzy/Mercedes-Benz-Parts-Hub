@@ -269,7 +269,7 @@ font-weight: 600 !important;
 					<li><a href="index.html">Homepage</a></li>
 					<li><a href="generic.html">Products</a></li>
 					<li><a href="addproduct.html">Add Product</a></li>
-					<li><a href="ordershistory.html">Order History</a></li>
+					<li><a href="orderhistory.html">Order History</a></li>
 					<li><a href="cart.html">Cart</a></li>
 				</ul>
 			</nav>
@@ -436,23 +436,22 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 		card.innerHTML = `
 			<div
-				class="product-image product-trigger"
-				data-id="${p._id || ""}"
-				data-name="${p.name || ""}"
-				data-stock="${stockText}"
-				data-use="${p.description || ""}"
-				data-price="€${Number(p.price || 0).toFixed(2)}"
-				data-raw-price="${Number(p.price || 0)}"
-				data-image="${imagePath}"
-			>
-				<img src="${imagePath}" alt="${p.name || "Product"}" />
-				<button class="wishlist-btn" type="button">&#9825;</button>
-				<span class="product-badge">${badgeText}</span>
-			</div>
-			<div class="product-info">
-				<p class="product-name">${p.name || ""}</p>
-				<p class="product-price">€${Number(p.price || 0).toFixed(2)}</p>
-			</div>
+		class="product-image product-trigger"
+		data-id="${p._id || ""}"
+		data-name="${p.name || ""}"
+		data-stock="${stockText}"
+		data-use="${p.description || ""}"
+		data-price="€${Number(p.price || 0).toFixed(2)}"
+		data-raw-price="${Number(p.price || 0)}"
+		data-image="${imagePath}"
+	>
+		<img src="${imagePath}" alt="${p.name || "Product"}" />
+		<span class="product-badge">${badgeText}</span>
+	</div>
+	<div class="product-info">
+		<p class="product-name">${p.name || ""}</p>
+		<p class="product-price">€${Number(p.price || 0).toFixed(2)}</p>
+	</div>
 		`;
 
 		return card;
@@ -570,7 +569,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 	document.addEventListener("click", function (e) {
 		const item = e.target.closest(".product-trigger");
 		if (!item) return;
-		if (e.target.closest(".wishlist-btn")) return;
+		
 
 		modalImage.src = item.dataset.image || "images/pic01.jpg";
 		modalImage.alt = item.dataset.name || "Product image";

@@ -24,13 +24,7 @@
 								<header id="header">
 									<h1>SilverStar Parts</h1>
 									
-									<ul class="icons">
-										<li><a href="#" class="icon brands fa-twitter"><span class="label">Home</span></a></li>
-										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Products</span></a></li>
-										<li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Orders</span></a></li>
-										<li><a href="#" class="icon brands fa-instagram"><span class="label">Cart</span></a></li>
-										<li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
-									</ul>
+									
 								</header>
 
 							<!-- Banner -->
@@ -235,8 +229,12 @@
 										<li><a href="generic.html">Products</a></li>
 										<li><a href="addproduct.html">Add Product</a></li>
 										<li><a href="orderhistory.html">Order History</a></li>
-										<li><a href="cart.html">Cart</a></li>
-										
+										<li>
+  <a href="cart.html" class="cart-link">
+    Cart
+    <span id="cartCountBadge" class="cart-badge">0</span>
+  </a>
+</li>
 												
 				
 									</ul>
@@ -302,6 +300,27 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script>
+function updateCartBadge() {
+  const badge = document.getElementById("cartCountBadge");
+  if (!badge) return;
+
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  let count = 0;
+  cart.forEach(item => {
+    count += Number(item.quantity || 1);
+  });
+
+  badge.textContent = count;
+}
+
+// run on page load
+updateCartBadge();
+
+// make callable globally
+window.updateCartBadge = updateCartBadge;
+</script>
 
 
 
