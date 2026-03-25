@@ -2979,39 +2979,7 @@ Mercedes Benz Car Parts
 └── README.md              # Project documentation
 ```
 
-### Explanation
 
-**Frontend Files**
-
-* `index.html` — landing page introducing SilverStar Parts
-* `generic.html` — products listing page
-* `cart.html` — shopping cart and checkout
-* `addproduct.html` — admin product management
-* `orderhistory.html` — displays completed orders
-
-**Assets and Images**
-
-* `assets/` contains CSS and JavaScript from the HTML5 UP template
-* `images/` stores product images
-
-**Backend (server folder)**
-
-* `controllers/` handles business logic for products, orders, and PayPal
-* `models/` defines MongoDB schemas
-* `routes/` defines API endpoints
-* `config/` stores database connection setup
-* `server.js` starts the Express application
-
-**Root Files**
-
-* `.env` stores database and PayPal credentials
-* `package.json` defines dependencies and scripts
-* `README.md` contains project documentation
-
-This structure separates frontend and backend responsibilities and improves maintainability and scalability of the SilverStar Parts Hub system.
-
-
----
 
 
 
