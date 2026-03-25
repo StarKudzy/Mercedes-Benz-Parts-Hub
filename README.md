@@ -80,13 +80,13 @@ To run the SilverStar Parts Hub application locally, follow the steps below:
 2. Download or clone the project files and navigate to the project folder.
 
 3. Install backend dependencies by running:
-   - `npm install`
+   - npm install
 
-4. Create a `.env` file in the root directory and add the following variables:
-   - `PORT=5000`
-   - `MONGO_URI=your_mongodb_connection_string`
-   - `PAYPAL_CLIENT_ID=your_paypal_client_id`
-   - `PAYPAL_CLIENT_SECRET=your_paypal_client_secret`
+4. Create a .env file in the root directory and add the following variables:
+   - PORT=5000`
+   - MONGO_URI=your_mongodb_connection_string`
+   - PAYPAL_CLIENT_ID=your_paypal_client_id`
+   - PAYPAL_CLIENT_SECRET=your_paypal_client_secret`
 
 5. Create PayPal Sandbox accounts:
    - Create one **Personal account (buyer)**
@@ -96,14 +96,14 @@ To run the SilverStar Parts Hub application locally, follow the steps below:
    - Euro (€) currency is not supported in this project configuration
 
 6. Start the backend server by running:
-   - `npm start`
-   - or `npm run dev` (if nodemon is installed)
+   - npm start
+   - or npm run dev (if nodemon is installed)
 
 7. Ensure MongoDB is running and connected successfully.
 
 8. Open the frontend by launching:
-   - `index.html`
-   - or run a local server using `npx serve`
+   - index.html
+   - or run a local server using npx serve
 
 9. Access the application in your browser.
 
