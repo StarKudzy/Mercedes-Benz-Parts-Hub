@@ -68,6 +68,58 @@ The main objective of this project is to build a simple and functional online sh
 ---
 
 
+##  How to Run the Project
+
+To run the SilverStar Parts Hub application locally, follow the steps below:
+
+1. Install the required software:
+   - Node.js (version 18 or higher recommended)
+   - MongoDB (local installation or MongoDB Atlas)
+   - Git (optional)
+
+2. Download or clone the project files and navigate to the project folder.
+
+3. Install backend dependencies by running:
+   - `npm install`
+
+4. Create a `.env` file in the root directory and add the following variables:
+   - `PORT=5000`
+   - `MONGO_URI=your_mongodb_connection_string`
+   - `PAYPAL_CLIENT_ID=your_paypal_client_id`
+   - `PAYPAL_CLIENT_SECRET=your_paypal_client_secret`
+
+5. Create PayPal Sandbox accounts:
+   - Create one **Personal account (buyer)**
+   - Create one **Business account (merchant)**
+   - Both accounts should be created using **United States (US)** as the region
+   - This is required because PayPal Sandbox enforces **USD currency** due to regional payment regulations
+   - Euro (€) currency is not supported in this project configuration
+
+6. Start the backend server by running:
+   - `npm start`
+   - or `npm run dev` (if nodemon is installed)
+
+7. Ensure MongoDB is running and connected successfully.
+
+8. Open the frontend by launching:
+   - `index.html`
+   - or run a local server using `npx serve`
+
+9. Access the application in your browser.
+
+10. Add sample products using the Add Product page.
+
+11. Browse products, add items to the cart, and proceed to checkout.
+
+12. Complete the payment using PayPal Sandbox credentials (US personal account).
+
+13. After successful payment, view orders in the Order History page.
+
+Following these steps will run the SilverStar Parts Hub application locally with full functionality.
+
+---
+
+
 
 
 
@@ -2914,20 +2966,7 @@ SilverStar Parts Hub
 
 ---
 
-## 9. Running the Full Application
 
-Steps to run:
-
-1. Start MongoDB
-2. Run backend server
-3. Open frontend in browser
-4. Add products using Add Product page
-5. Browse products
-6. Add items to cart
-7. Checkout with PayPal sandbox
-8. View order history
-
----
 
 ## Summary
 
