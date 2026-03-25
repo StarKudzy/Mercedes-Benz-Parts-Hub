@@ -89,7 +89,7 @@ For this page, I used the **Editorial template by HTML5 UP** as the base layout 
 
 The landing page begins with the standard HTML document structure. It also links the external stylesheet from the template.
 
-![Landing Page](images/screenshots/landingpage.png)
+![Landing Page](screenshots/landingpage.png)
 
 ```html
 <!DOCTYPE HTML>
@@ -340,7 +340,7 @@ The application follows a typical full-stack web application structure:
 
 The Products page allows users to browse available Mercedes-Benz car parts, filter by category, search products, view product details, and add items to the cart. This page was built using the **HTML5 UP Editorial template** and extended with custom CSS and JavaScript to support dynamic functionality.
 
-![PRODUCTS Page](images/screenshots/products.png)
+![PRODUCTS Page](screenshots/products.png)
 
 ---
 
@@ -623,7 +623,7 @@ The Add Product page is an administrative page in the **SilverStar Parts Hub** p
 
 Like the other pages in this project, the Add Product page uses the **HTML5 UP Editorial template** as the base layout and structure, while the form logic and product management functionality were customized for the project requirements.
 
-![AddProduct Page](images/screenshots/add_product.png)
+![AddProduct Page](screenshots/add_product.png)
 
 ---
 
@@ -1302,7 +1302,7 @@ This page is important because it connects the frontend form interface with the 
 
 The Cart page manages the shopping process in the **SilverStar Parts Hub** project. It allows users to review selected Mercedes-Benz parts, update item quantities, remove products, view subtotal and shipping costs, and complete checkout using PayPal. This page combines frontend cart management with payment integration.
 
-![Cart Page](images/screenshots/cart.png)
+![Cart Page](screenshots/cart.png)
 
 ---
 
@@ -1722,7 +1722,7 @@ This page is important because it links cart management, pricing logic, and paym
 
 The Order History page displays all completed purchases made in the **SilverStar Parts Hub** system. Its main purpose is to show previously placed orders, including customer details, ordered items, quantities, prices, and order dates. This page connects the frontend to the backend order API and gives users a clear record of their purchases.
 
-![Order HistroryPage](images/screenshots/order_history.png)
+![Order HistroryPage](screenshots/order_history.png)
 
 ---
 
