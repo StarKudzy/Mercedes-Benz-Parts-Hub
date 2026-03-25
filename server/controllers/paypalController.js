@@ -76,7 +76,7 @@ exports.createPayPalOrder = async (req, res) => {
       purchase_units: [
         {
           amount: {
-            currency_code: "EUR",
+            currency_code: "USD",
             value: total.toFixed(2)
           }
         }
